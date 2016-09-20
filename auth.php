@@ -93,15 +93,21 @@ class auth_plugin_userkey extends auth_plugin_base {
 
         $keyvalue = required_param('key', PARAM_ALPHANUM);
         $wantsurl = optional_param('wantsurl', '', PARAM_URL);
-
         $key = $this->userkeymanager->validate_key($keyvalue);
         $this->userkeymanager->delete_keys($key->userid);
 
         $user = get_complete_user_data('id', $key->userid);
+
         complete_user_login($user);
 
         // Identify this session as using user key auth method.
         $SESSION->userkey = true;
+
+        $wurl = explode("=", $wantsurl);
+
+        if(isset($_GET['al']) && $_GET['al'] && isset($wurl[1]) && $wurl[1]){
+            $wantsurl = $CFG->wwwroot . "/course/loginas.php?id=" . $wurl[1] . "&user=" . $_GET['al'] . "&sesskey=" . $_SESSION['USER']->sesskey;
+        }
 
         if (!empty($wantsurl)) {
             return $wantsurl;

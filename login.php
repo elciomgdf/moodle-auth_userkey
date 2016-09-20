@@ -29,4 +29,5 @@ if (!is_enabled_auth('userkey')) {
 }
 
 $redirect = get_auth_plugin('userkey')->user_login_userkey();
+
 redirect($redirect);
