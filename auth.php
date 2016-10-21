@@ -94,7 +94,7 @@ class auth_plugin_userkey extends auth_plugin_base {
         $keyvalue = required_param('key', PARAM_ALPHANUM);
         $wantsurl = optional_param('wantsurl', '', PARAM_URL);
         $key = $this->userkeymanager->validate_key($keyvalue);
-        $this->userkeymanager->delete_keys($key->userid);
+//        $this->userkeymanager->delete_keys($key->userid);
 
         $user = get_complete_user_data('id', $key->userid);
 
